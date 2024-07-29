@@ -1,6 +1,6 @@
 import React from "react";
 import path from "path";
-import { ImgCategory } from "@/components/ImgCategory";
+import { ImgCategory } from "../components/ImgCategory";
 
 const fs = require("fs");
 export async function getStaticProps() {
@@ -19,7 +19,7 @@ export async function getStaticProps() {
 	return { props };
 }
 
-export default function Index(props: {[key: string]: string[]}) {
+export default function Gallery(props: {[key: string]: string[]}) {
 	const categoryNames = Object.keys(props);
     return (
 		categoryNames && categoryNames.map(n => {
