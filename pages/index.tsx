@@ -20,6 +20,9 @@ export async function getStaticProps() {
 export default function Gallery(props: {[key: string]: string[]}) {
 	const categoryNames = Object.keys(props);
 
+	const { data: session, status } = useSession();
+	console.log(status);
+
     return (
 		<>
 			<LoginButton />

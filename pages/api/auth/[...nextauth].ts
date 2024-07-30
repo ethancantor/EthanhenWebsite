@@ -13,15 +13,10 @@ export const authOptions = {
 
             async authorize(credentials, req) {
                 // Add logic here to look up the user from the credentials supplied
-                // const user = { id: "1", name: "J Smith", email: "jsmith@example.com" }
-                console.log(credentials);
-                if (credentials) {
-                //     // Any object returned will be saved in `user` property of the JWT
-                    return { id: '1', name: credentials.username, password: credentials.password }
-                } else {
-                    // If you return null then an error will be displayed advising the user to check their details.
-                    return null
+                if(credentials?.username === process.env.USERNAME && credentials?.password === process.env.PASSWORD){
+                    return { id: '1', name: credentials?.username };
                 }
+                return null;
             }
         })
     ],
