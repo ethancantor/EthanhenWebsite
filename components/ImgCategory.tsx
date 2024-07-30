@@ -13,7 +13,7 @@ export function ImgCategory(props: imgCategoryProps) {
             <div className="flex flex-row item-center justify-center">
                 {props.imgs && props.imgs.map(i => {
                     return (
-                        <div className="size-60 m-4 hover:size-96 transition-all duration-300 cursor-pointer">
+                        <div className="size-72 m-4 cursor-pointer" key={'div ' + i}>
                             <img src={'/gallery/' + props.categoryName + '/' + i} alt={i} className="" key={i}/>
                         </div>
                     ) 
