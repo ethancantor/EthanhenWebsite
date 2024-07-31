@@ -24,12 +24,12 @@ export default function Gallery(props: {[key: string]: string[]}) {
 	console.log(session);
 
     return (
-		<>
+		<div className="bg-gray-950">
 			<LoginButton />
 			{categoryNames && categoryNames.map(n => {
-				return (<ImgCategory categoryName={n} imgs={props[n]}/>);
+				return (<ImgCategory categoryName={n} imgs={props[n]} key={n}/>);
 			})}
-		</>
+		</div>
     );
 };
 
