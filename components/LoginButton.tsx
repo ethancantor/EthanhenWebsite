@@ -1,25 +1,26 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import React from "react";
+import { Button } from "./Button";
+import Image from "next/image";
 
 export default function LoginButton() {
 	const { data: session, status } = useSession();
 
 	if(status === 'loading') return ''
 
-	console.log(session);
-
 	if (session) {
 		return (
 			<>
 				Signed in as {session.user?.name} <br />
-				<button onClick={() => signOut()}>Sign out</button>
+				<Image src={session.user?.image?.toString() || ''}  width={50} height={50} alt='discord' className="rounded-full"/>
+				<Button onClick={() => signOut()}>Sign out</Button>
 			</>
 		)
 	}
 	return (
 		<>
 			Not signed in <br />
-			<button onClick={() => signIn('credentials', {callbackUrl: '/'})}>Sign in</button>
+			<Button onClick={() => signIn()}>Sign in</Button>
 		</>
 	)
 

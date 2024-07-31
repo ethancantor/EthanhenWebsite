@@ -1,24 +1,31 @@
 import NextAuth from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
+import DiscordProvider from 'next-auth/providers/discord';
 
 export const authOptions = {
     // Configure one or more authentication providers
     providers: [
-        CredentialsProvider({
-            name: "Credentials",
-            credentials: {
-                username: { label: "Username", type: "text", placeholder: "jsmith" },
-                password: { label: "Password", type: "password" }
-            },
-
-            async authorize(credentials, req) {
-                // Add logic here to look up the user from the credentials supplied
-                if(credentials?.username === process.env.USERNAME && credentials?.password === process.env.PASSWORD){
-                    return { id: '1', name: credentials?.username };
-                }
-                return null;
+        DiscordProvider({
+            clientId: process.env.DISCORD_CLIENT_ID || '',
+            clientSecret: process.env.DISCORD_CLIENT_SECRET || '',
+            authorization: { params: { scope: 'identify email' }},
+            profile(profile) {
+                const format = profile.avatar.startsWith("a_") ? "gif" : "png";
+                return {
+                    id: profile.id,
+                    name: profile.username,
+                    image: `https://cdn.discordapp.com/avatars/${profile.id}/${profile.avatar}.${format}`
+                };
             }
         })
     ],
+    callbacks: {
+        async signIn(options: any) {
+            if(options.account.provider !== 'discord' && !options.user.id)
+                return false;
+
+            const allowedUsers = process.env.ALLOWED_USERS?.split(' ') || [];
+            return allowedUsers.includes(options.user.id.toString());
+        }
+    }
 }
 export default NextAuth(authOptions)
