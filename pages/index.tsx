@@ -2,7 +2,7 @@ import React from "react";
 import path from "path";
 import { ImgCategory } from "../components/ImgCategory";
 import fs from "fs";
-import { signIn, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import LoginButton from "@/components/LoginButton";
 
 export async function getStaticProps() {
@@ -21,7 +21,7 @@ export default function Gallery(props: {[key: string]: string[]}) {
 	const categoryNames = Object.keys(props);
 
 	const { data: session, status } = useSession();
-	console.log(status);
+	console.log(session);
 
     return (
 		<>

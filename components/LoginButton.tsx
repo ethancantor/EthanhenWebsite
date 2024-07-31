@@ -2,6 +2,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import React from "react";
 import { Button } from "./Button";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function LoginButton() {
 	const { data: session, status } = useSession();
@@ -18,10 +19,7 @@ export default function LoginButton() {
 		)
 	}
 	return (
-		<>
-			Not signed in <br />
-			<Button onClick={() => signIn()}>Sign in</Button>
-		</>
+		<Link href={'/signin'}>Sign in</Link>
 	)
 
 }
