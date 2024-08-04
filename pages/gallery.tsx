@@ -1,9 +1,8 @@
 import React from "react";
 import path from "path";
-import { ImgCategory } from "../components/ImgCategory";
 import fs from "fs";
-import { useSession } from "next-auth/react";
 import Header from "@/components/Header";
+import { ImgCategory } from "../components/ImgCategory";
 
 export async function getStaticProps() {
 	const imageDir = path.join(process.cwd(), "/public/gallery");
@@ -19,9 +18,6 @@ export async function getStaticProps() {
 
 export default function Gallery(props: {[key: string]: string[]}) {
 	const categoryNames = Object.keys(props);
-
-	const { data: session, status } = useSession();
-	console.log(session?.user);
 
     return (
         <div className="flex flex-col border border-white w-screen h-screen">
