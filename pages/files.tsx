@@ -2,7 +2,7 @@ import FileNode from '@/components/FileManager/FileNode'
 import React from 'react'
 import path from "path";
 import fs from "fs";
-import { folder } from '@/components/icons/icons.index';
+import { FILE_TYPE } from '@/types/filetypes';
 
 export async function getStaticProps() {
 	const filesDir = path.join(process.cwd(), "/public/files");
@@ -31,10 +31,19 @@ interface Props {fileTree: {[key: string]: any}}
 function Files(props: Props) {
     const { fileTree } = props;
 
-    console.log(fileTree);
+    function jsonToFile(f: FILE_TYPE) {
+        if(f.folder){
+            return <FileNode name={f.folder + " " + f.children.length} isFolder> {f.children.map((c: any) => jsonToFile(c))}</FileNode>
+        } else {
+            console.log(f);
+            return <FileNode name={f.toString()} />
+        }
+    }
 
     return (
-        <FileNode name='test' isFolder><FileNode name='test2' isFolder/></FileNode>
+        fileTree && fileTree.map((f: FILE_TYPE) => {
+            return jsonToFile(f);
+        })
     )
 }
 
